@@ -2,26 +2,13 @@
   <h1>Placeholder</h1>
   <nav>
     <ul>
-      <li>Home</li>
-      <li>About</li>
+      <li><a routerLink="">Home</a></li>
+      <li><a routerLink="about">About</a></li>
     </ul>
   </nav>
 </header>
 
-<div class="content">
-  <label for="ApiInput">API key</label>
-  <input id="ApiInput" type="text" #apiInput>
-  <button type="button" (click)="loadApiKey(apiInput.value)">Load</button>
-  <p *ngIf="apiKey">LOADED</p>
-  <p *ngIf="!apiKey">NOT LOADED</p>
-  
-  <label for="SummonerNameInput">Summoner Name</label>
-  <input id="SummonerNameInput" type="text" #summonetInput>
-  <button type="button" (click)="findSummoner(summonetInput.value)">Find</button>
-  <p>Response:</p>
-  <p>{{ response }}</p>
-
-</div>
+<router-outlet></router-outlet>
 
 <footer>
   <p>&copy; 2023 My Website. All rights reserved.</p>
