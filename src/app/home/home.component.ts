@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RiotService } from '../shared/riot.service';
 import { SummonerDTO } from '../shared/model/summoner.model';
-import { flatMap, mergeMap, switchMap, tap } from 'rxjs';
+import { mergeMap, switchMap } from 'rxjs';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,10 @@ import { flatMap, mergeMap, switchMap, tap } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private riot: RiotService) { }
+  constructor(
+    private logger: NGXLogger,
+    private riot: RiotService
+  ) { }
 
   ngOnInit(): void {
     this.riot.apiKey = localStorage.getItem('api_key');
@@ -25,23 +29,20 @@ export class HomeComponent implements OnInit {
     this.riot.getSummoner(name, 'eun1')
       .pipe(
         switchMap(summoner => {
-          console.log(summoner.puuid);
+          this.logger.debug(summoner.puuid);
           return this.riot.getMatches(summoner.puuid);
         }),
         mergeMap(matchIds => matchIds),
         mergeMap(matchId => {
-          console.log(matchId);
-          
+          this.logger.debug(matchId);
           return this.riot.getMatch(matchId);
         })
       ).subscribe({
-        next: matches => {
-          console.log(matches);
-          
+        next: matche => {
+          this.logger.debug(matche);
         },
         error: error => {
-          console.log(error);
-          
+          this.logger.error(error);
         }
       });
   }
