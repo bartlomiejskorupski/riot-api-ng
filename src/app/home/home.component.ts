@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RiotService } from '../shared/riot.service';
+import { SummonerDTO } from '../shared/model/summoner.model';
+import { flatMap, mergeMap, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,14 +22,30 @@ export class HomeComponent implements OnInit {
   }
 
   getSummoner(name: string) {
-    this.riot.getSummoner(name, 'eun1').subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log('error', error);
-      }
-    );
+    this.riot.getSummoner(name, 'eun1')
+      .pipe(
+        switchMap(summoner => {
+          console.log(summoner.puuid);
+          return this.riot.getMatches(summoner.puuid);
+        }),
+        mergeMap(matchIds => matchIds),
+        mergeMap(matchId => {
+          console.log(matchId);
+          
+          return this.riot.getMatch(matchId);
+        })
+      ).subscribe({
+        next: matches => {
+          console.log(matches);
+          
+        },
+        error: error => {
+          console.log(error);
+          
+        }
+      });
   }
+
+
 
 }
