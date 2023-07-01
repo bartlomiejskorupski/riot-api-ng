@@ -17,34 +17,28 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.riot.apiKey = localStorage.getItem('api_key');
+    const apiKey = localStorage.getItem('api_key');
+    if(apiKey) {
+      this.riot.apiKey = apiKey;
+      this.logger.debug('Api key loaded from localStorage');
+    }
   }
 
   setApiKey(key: string) {
     this.riot.apiKey = key;
     localStorage.setItem('api_key', key);
+    this.logger.debug('Api key loaded.');
   }
 
   getSummoner(name: string) {
-    this.riot.getSummoner(name, 'eun1')
-      .pipe(
-        switchMap(summoner => {
-          this.logger.debug(summoner.puuid);
-          return this.riot.getMatches(summoner.puuid);
-        }),
-        mergeMap(matchIds => matchIds),
-        mergeMap(matchId => {
-          this.logger.debug(matchId);
-          return this.riot.getMatch(matchId);
-        })
-      ).subscribe({
-        next: matche => {
-          this.logger.debug(matche);
-        },
-        error: error => {
-          this.logger.error(error);
-        }
-      });
+    this.riot.getSummoner(name).subscribe({
+      next: summoner => {
+        this.logger.debug(summoner);
+      },
+      error: err => {
+        this.logger.error(err);
+      }
+    });
   }
 
 
