@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable, catchError, map, of, tap } from "rxjs";
 import { SummonerDTO } from "./model/summoner.model";
 import { MatchDTO } from "./model/match.model";
 import { NGXLogger } from "ngx-logger";
@@ -9,12 +9,40 @@ import { NGXLogger } from "ngx-logger";
 @Injectable({ providedIn: 'root' })
 export class RiotService {
 
-  apiKey: string;
+  private apiKeyValidSubject = new BehaviorSubject<boolean>(false);
+  apiKeyValid$ = this.apiKeyValidSubject.asObservable();
+  private apiKey: string;
 
   constructor(
     private http: HttpClient,
     private logger: NGXLogger
   ) {}
+
+  setApiKey(key: string): Observable<boolean> {
+    return this.isApiKeyValid(key).pipe(
+      tap(valid => {
+        this.logger.debug('Api key valid: ', valid);
+        this.apiKey = key;
+        this.apiKeyValidSubject.next(true);
+        localStorage.setItem('api_key', key);
+      })
+    )
+  }
+
+  getApiKey() {
+    return this.apiKey;
+  }
+
+  isApiKeyValid(key: string): Observable<boolean> {
+    const url = '/api/eun1/lol/status/v4/platform-data';
+    this.logger.debug('Checking api key:', key);
+    return this.http.get(url, {
+      params: new HttpParams().set('api_key', key)
+    }).pipe(
+      map(_ => true),
+      catchError(_ => of(false))
+    );
+  }
 
   getSummoner(name: string): Observable<SummonerDTO> {
     const endpoint = `/lol/summoner/v4/summoners/by-name/${encodeURI(name)}`;

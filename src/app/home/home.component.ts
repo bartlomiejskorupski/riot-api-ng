@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RiotService } from '../shared/riot.service';
 import { SummonerDTO } from '../shared/model/summoner.model';
-import { mergeMap, switchMap } from 'rxjs';
+import { Subscription, mergeMap, switchMap } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+
+  apiKeyValid = false;
+
+  private subs: Subscription[] = [];
 
   constructor(
     private logger: NGXLogger,
@@ -19,11 +23,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const apiKey = localStorage.getItem('api_key');
-    if(apiKey) {
-      this.riot.apiKey = apiKey;
-      this.logger.debug('Api key loaded from localStorage');
-    }
+    this.subs.push(this.riot.apiKeyValid$.subscribe({
+      next: valid => {
+        this.apiKeyValid = valid;
+      }
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   enterPressed(name: string) {
@@ -35,9 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   setApiKey(key: string) {
-    this.riot.apiKey = key;
-    localStorage.setItem('api_key', key);
-    this.logger.debug('Api key loaded.');
+    this.subs.push(this.riot.setApiKey(key).subscribe());
   }
 
 }

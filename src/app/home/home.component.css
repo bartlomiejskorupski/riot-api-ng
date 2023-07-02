@@ -12,11 +12,7 @@ label {
   text-align: center;
 }
 
-.api-input-container {
-  display: none;
-}
-
-.summoner-input-container {
+.input-container {
   width: 100%;
   max-width: 400px;
 }

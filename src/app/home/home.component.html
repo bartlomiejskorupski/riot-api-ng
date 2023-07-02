@@ -1,13 +1,13 @@
 <div class="content">
   
   
-  <div class="api-input-container">
-    <label for="ApiInput">API key</label>
-    <input id="ApiInput" type="text" #apiInput>
-    <button type="button" (click)="setApiKey(apiInput.value)">Load</button>
+  <div class="input-container" *ngIf="!apiKeyValid">
+    <label for="ApiInput">Enter API key</label>
+    <input id="ApiInput" type="text" #apiInput
+      (keydown.enter)="setApiKey(apiInput.value)">
   </div>
   
-  <div class="summoner-input-container">
+  <div class="input-container" *ngIf="apiKeyValid">
     <label for="SummonerNameInput">Find summoner</label>
     <input id="SummonerNameInput" #summonerInput type="text"
       (keydown.enter)="enterPressed(summonerInput.value)">

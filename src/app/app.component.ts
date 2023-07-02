@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { RiotService } from './shared/riot.service';
 
 
 @Component({
@@ -9,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   
-  constructor() {}
+  constructor(
+    private riot: RiotService
+  ) {}
 
   ngOnInit(): void {
-
+    const storedKey = localStorage.getItem('api_key');
+    if(!storedKey) {
+      return;
+    }
+    this.riot.setApiKey(storedKey).subscribe();
   }
 
 }
