@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RiotService } from './shared/riot.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,8 +9,10 @@ import { RiotService } from './shared/riot.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   
+  private sub: Subscription;
+
   constructor(
     private riot: RiotService
   ) {}
@@ -19,7 +22,11 @@ export class AppComponent implements OnInit {
     if(!storedKey) {
       return;
     }
-    this.riot.setApiKey(storedKey).subscribe();
+    this.sub = this.riot.setApiKey(storedKey).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
 }
