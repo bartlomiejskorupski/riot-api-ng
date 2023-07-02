@@ -3,6 +3,7 @@ import { RiotService } from '../shared/riot.service';
 import { SummonerDTO } from '../shared/model/summoner.model';
 import { mergeMap, switchMap } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private logger: NGXLogger,
-    private riot: RiotService
+    private riot: RiotService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -24,23 +26,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  enterPressed(name: string) {
+    if(!name) {
+      return;
+    }
+    this.logger.debug('Entered summoner name:', name);
+    this.router.navigate(['summoner', 'eun1', name]);
+  }
+
   setApiKey(key: string) {
     this.riot.apiKey = key;
     localStorage.setItem('api_key', key);
     this.logger.debug('Api key loaded.');
   }
-
-  getSummoner(name: string) {
-    this.riot.getSummoner(name).subscribe({
-      next: summoner => {
-        this.logger.debug(summoner);
-      },
-      error: err => {
-        this.logger.error(err);
-      }
-    });
-  }
-
-
 
 }

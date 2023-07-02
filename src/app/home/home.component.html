@@ -1,11 +1,16 @@
 <div class="content">
   
-  <label for="ApiInput">API key</label>
-  <input id="ApiInput" type="text" #apiInput>
-  <button type="button" (click)="setApiKey(apiInput.value)">Load</button>
   
-  <label for="SummonerNameInput">Summoner Name</label>
-  <input id="SummonerNameInput" type="text" #summonerInput>
-  <button type="button" (click)="getSummoner(summonerInput.value)">Find</button>
+  <div class="api-input-container">
+    <label for="ApiInput">API key</label>
+    <input id="ApiInput" type="text" #apiInput>
+    <button type="button" (click)="setApiKey(apiInput.value)">Load</button>
+  </div>
+  
+  <div class="summoner-input-container">
+    <label for="SummonerNameInput">Find summoner</label>
+    <input id="SummonerNameInput" #summonerInput type="text"
+      (keydown.enter)="enterPressed(summonerInput.value)">
+  </div>
 
 </div>

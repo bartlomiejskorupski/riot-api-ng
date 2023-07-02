@@ -39,7 +39,8 @@ header li {
   display: inline-block;
 }
 
-header a:hover {
+header a:hover,
+.active {
   background-color: #2f426c;
 }
 
