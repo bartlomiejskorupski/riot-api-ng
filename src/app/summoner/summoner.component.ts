@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-summoner',
   templateUrl: './summoner.component.html',
   styleUrls: ['./summoner.component.css']
 })
-export class SummonerComponent implements OnInit {
+export class SummonerComponent implements OnInit, OnDestroy {
 
   summonerName: string;
   region: string;
+
+  private paramsSub: Subscription;
 
   constructor(
     private logger: NGXLogger,
@@ -18,12 +21,16 @@ export class SummonerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe({
+    this.paramsSub = this.route.params.subscribe({
       next: params => {
         this.summonerName = params['name'];
         this.region = params['region'];
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSub?.unsubscribe();
   }
 
 }

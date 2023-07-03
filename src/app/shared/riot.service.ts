@@ -23,7 +23,7 @@ export class RiotService {
       tap(valid => {
         this.logger.debug('Api key valid: ', valid);
         this.apiKey = key;
-        this.apiKeyValidSubject.next(true);
+        this.apiKeyValidSubject.next(valid);
         localStorage.setItem('api_key', key);
       })
     )

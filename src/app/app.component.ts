@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RiotService } from './shared/riot.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({
@@ -14,7 +16,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private riot: RiotService
+    private logger: NGXLogger,
+    private router: Router,
+    private route: ActivatedRoute,
+    private riot: RiotService,
   ) {}
 
   ngOnInit(): void {
@@ -22,7 +27,14 @@ export class AppComponent implements OnInit, OnDestroy {
     if(!storedKey) {
       return;
     }
-    this.sub = this.riot.setApiKey(storedKey).subscribe();
+    this.sub = this.riot.setApiKey(storedKey).subscribe({
+      next: valid => {
+        if(!valid){
+          this.logger.debug('Api key invalid, routing to home')
+          this.router.navigate(['/']);
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
