@@ -12,33 +12,16 @@ import { NGXLogger } from 'ngx-logger';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  
-  private sub: Subscription;
 
   constructor(
     private logger: NGXLogger,
-    private router: Router,
-    private route: ActivatedRoute,
-    private riot: RiotService,
   ) {}
 
   ngOnInit(): void {
-    const storedKey = localStorage.getItem('api_key');
-    if(!storedKey) {
-      return;
-    }
-    this.sub = this.riot.setApiKey(storedKey).subscribe({
-      next: valid => {
-        if(!valid){
-          this.logger.debug('Api key invalid, routing to home')
-          this.router.navigate(['/']);
-        }
-      }
-    });
+    
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
   }
 
 }

@@ -1,13 +1,6 @@
 <div class="content">
   
-  
-  <div class="input-container" *ngIf="!apiKeyValid">
-    <label for="ApiInput">Enter API key</label>
-    <input id="ApiInput" type="text" #apiInput
-      (keydown.enter)="setApiKey(apiInput.value)">
-  </div>
-  
-  <div class="input-container" *ngIf="apiKeyValid">
+  <div class="input-container">
     <label for="SummonerNameInput">Find summoner</label>
     <input id="SummonerNameInput" #summonerInput type="text"
       (keydown.enter)="enterPressed(summonerInput.value)">

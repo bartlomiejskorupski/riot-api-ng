@@ -12,26 +12,16 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  apiKeyValid = false;
-
-  private subs: Subscription[] = [];
-
   constructor(
     private logger: NGXLogger,
-    private riot: RiotService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.subs.push(this.riot.apiKeyValid$.subscribe({
-      next: valid => {
-        this.apiKeyValid = valid;
-      }
-    }));
+    
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   enterPressed(name: string) {
@@ -42,8 +32,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['summoner', 'eun1', name]);
   }
 
-  setApiKey(key: string) {
-    this.subs.push(this.riot.setApiKey(key).subscribe());
-  }
 
 }
