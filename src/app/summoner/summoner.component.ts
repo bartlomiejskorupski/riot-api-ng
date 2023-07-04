@@ -12,8 +12,10 @@ import { SummonerDTO } from '../shared/model/summoner.model';
 })
 export class SummonerComponent implements OnInit, OnDestroy {
 
+  iconId: number;
   summoner: SummonerDTO;
   region: string;
+  revisionDate: Date
 
   private paramsSub: Subscription;
 
@@ -32,12 +34,12 @@ export class SummonerComponent implements OnInit, OnDestroy {
   }
 
   queryParamsChange = (params: Params) => {
-    console.log(this);
-    
     this.region = params['region'];
     this.riot.getSummoner(this.region, params['name']).subscribe({
       next: summoner => {
         this.summoner = summoner;
+        this.iconId = summoner.profileIconId;
+        this.revisionDate = new Date(summoner.revisionDate);
       },
       error: _ => { this.summoner = null }
     });

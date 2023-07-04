@@ -32,9 +32,9 @@ export class RiotService {
   }
 
   private getEndpoint(endpoint: string, params?: HttpParams): Observable<any> {
+    this.logger.debug(endpoint);
     const url = new URL(endpoint, environment.apiUrl);
     params = params ? params : new HttpParams();
-    this.logger.debug(url.href);
     return this.http.get(url.href, { params });
   }
 

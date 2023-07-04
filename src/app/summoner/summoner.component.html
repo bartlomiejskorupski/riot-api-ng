@@ -1,4 +1,19 @@
-<div class="content">
-  <p>Summoner: {{ summoner?.name }}</p>
-  <p>Region: {{ region }}</p>
+<div class="grid-box">
+  <div class="grid-item profile-header">
+    <div class="summoner-icon-container">
+      <span class="summoner-level">{{summoner?.summonerLevel}}</span>
+      <div class="summoner-icon-border">
+        <img class="summoner-icon" *ngIf="iconId" [src]="'https://ddragon.leagueoflegends.com/cdn/13.13.1/img/profileicon/' + iconId +'.png'" alt="Summoner Icon">
+      </div>
+    </div>
+    <div class="summoner-info-container">
+      <span class="summoner-info-name">{{summoner?.name}}</span>
+    </div>
+  </div>
+  <div class="grid-item ranked">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero delectus id optio totam aut sit quod pariatur omnis dolores iure quam, necessitatibus ducimus harum assumenda, blanditiis non vitae neque vel.
+  </div>
+  <div class="grid-item match-history">
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis vero voluptatum sint facilis voluptatibus asperiores molestias rerum ex illo non vitae nam, saepe adipisci possimus impedit repellendus alias delectus eaque.
+  </div>
 </div>
