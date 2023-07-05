@@ -1,0 +1,17 @@
+<div class="input-container">
+  <div class="region-select-container">
+    <select class="region-select" #regionSelect>
+      <option *ngFor="let regionName of regionNames"
+        [value]="regions[regionName]">{{regionName}}</option>
+    </select>
+  </div>
+  <input class="name-input" #summonerInput type="text"
+    placeholder="Find summoner..."
+    (keydown.enter)="findSummoner(regionSelect.value, summonerInput.value)">
+  <div class="find-button-container">
+    <button class="find-button" type="button"
+      (click)="findSummoner(regionSelect.value, summonerInput.value)">
+      Find
+    </button>
+  </div>
+</div>

@@ -7,22 +7,3 @@
   gap: 1em;
 }
 
-label {
-  display: block;
-  text-align: center;
-}
-
-.input-container {
-  width: 100%;
-  max-width: 400px;
-}
-
-input {
-  padding: 1em 2em;
-  border-radius: 2em;
-  background-color: #252a34;
-  border-style: none;
-  color: inherit;
-  outline: none;
-  width: 100%;
-}

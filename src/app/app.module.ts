@@ -7,13 +7,15 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppLoggerModule } from './app-logger.module';
 import { SummonerComponent } from './summoner/summoner.component';
+import { FindSummonerInputComponent } from './home/find-summoner-input/find-summoner-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PageNotFoundComponent,
-    SummonerComponent
+    SummonerComponent,
+    FindSummonerInputComponent
   ],
   imports: [
     BrowserModule,

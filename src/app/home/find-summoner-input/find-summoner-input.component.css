@@ -1,0 +1,35 @@
+.input-container {
+  display: flex;
+  width: 100vw;
+  max-width: 400px;
+  border-radius: 2em;
+  background-color: #252a34;
+}
+
+.region-select {
+  height: 100%;
+  min-width: 70px;
+  background-color: #252a34;
+  color: inherit;
+  padding-left: .8em;
+  padding-right: .5em;
+  border: none;
+  outline: none;
+  border-radius: 9999px;
+}
+
+.name-input {
+  background-color: unset;
+  padding: 1em 1em;
+  border-style: none;
+  color: inherit;
+  outline: none;
+  width: 100%;
+}
+
+.find-button {
+  all: unset;
+  padding: 0 1em;
+  border-radius: 9999px;
+  height: 100%;
+}
