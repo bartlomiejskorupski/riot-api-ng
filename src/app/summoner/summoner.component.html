@@ -3,7 +3,7 @@
     <div class="summoner-icon-container">
       <span class="summoner-level">{{summoner?.summonerLevel}}</span>
       <div class="summoner-icon-border">
-        <img class="summoner-icon" *ngIf="iconId" [src]="'https://ddragon.leagueoflegends.com/cdn/13.13.1/img/profileicon/' + iconId +'.png'" alt="Summoner Icon">
+        <img class="summoner-icon" *ngIf="!!summoner" [src]="iconPath" alt="Summoner Icon">
       </div>
     </div>
     <div class="summoner-info-container">

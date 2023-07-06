@@ -1,7 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RiotService } from '../shared/riot.service';
-import { SummonerDTO } from '../shared/model/summoner.model';
-import { Subscription, mergeMap, switchMap } from 'rxjs';
 import { NGXLogger } from 'ngx-logger';
 import { Router } from '@angular/router';
 

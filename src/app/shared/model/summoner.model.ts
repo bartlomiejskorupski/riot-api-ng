@@ -1,4 +1,4 @@
-export interface SummonerDTO {
+export interface SummonerResponse {
   accountId?: string;
   profileIconId?: number;
   revisionDate?: number;
@@ -6,4 +6,5 @@ export interface SummonerDTO {
   id?: string;
   puuid?: string;
   summonerLevel?: number;
+  profileIconPath?: string;
 }

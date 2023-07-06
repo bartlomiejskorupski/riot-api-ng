@@ -3,7 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { RiotService } from '../shared/riot.service';
-import { SummonerDTO } from '../shared/model/summoner.model';
+import { SummonerResponse } from '../shared/model/summoner.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-summoner',
@@ -12,8 +13,8 @@ import { SummonerDTO } from '../shared/model/summoner.model';
 })
 export class SummonerComponent implements OnInit, OnDestroy {
 
-  iconId: number;
-  summoner: SummonerDTO;
+  summoner: SummonerResponse;
+  iconPath: string;
   region: string;
   revisionDate: Date
 
@@ -38,10 +39,11 @@ export class SummonerComponent implements OnInit, OnDestroy {
     this.riot.getSummoner(this.region, params['name']).subscribe({
       next: summoner => {
         this.summoner = summoner;
-        this.iconId = summoner.profileIconId;
-        this.revisionDate = new Date(summoner.revisionDate);
+        this.iconPath = environment.apiUrl + summoner.profileIconPath;
       },
-      error: _ => { this.summoner = null }
+      error: _ => {
+        this.summoner = null;
+      }
     });
   }
 

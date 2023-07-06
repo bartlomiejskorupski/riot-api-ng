@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, catchError, map, of, tap } from "rxjs";
-import { SummonerDTO } from "./model/summoner.model";
+import { SummonerResponse } from "./model/summoner.model";
 import { MatchDTO } from "./model/match.model";
 import { NGXLogger } from "ngx-logger";
 import { environment } from "src/environments/environment";
@@ -15,7 +15,7 @@ export class RiotService {
     private logger: NGXLogger
   ) {}
 
-  getSummoner(region: string, name: string): Observable<SummonerDTO> {
+  getSummoner(region: string, name: string): Observable<SummonerResponse> {
     const endpoint = `/api/${region}/summoner/${encodeURI(name)}`;
     return this.getEndpoint(endpoint);
   }

@@ -43,12 +43,13 @@ export class FindSummonerInputComponent implements OnInit, OnDestroy {
     
   }
 
-  findSummoner(region: string, name: string) {
-    if(!name) {
+  findSummoner(regionSelect: HTMLSelectElement, nameInput: HTMLInputElement) {
+    this.logger.debug(regionSelect.value, nameInput.value);
+    if(!nameInput.value) {
       return;
     }
-    this.logger.debug('Find:', name, 'Region:', region);
-    this.router.navigate(['summoner', region, name]);
+    this.router.navigate(['summoner', regionSelect.value, nameInput.value]);
+    nameInput.value = "";
   }
 
 }
