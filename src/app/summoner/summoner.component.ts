@@ -39,6 +39,7 @@ export class SummonerComponent implements OnInit, OnDestroy {
     this.riot.getSummoner(this.region, params['name']).subscribe({
       next: summoner => {
         this.summoner = summoner;
+        this.logger.debug(summoner);
         this.iconPath = environment.apiUrl + summoner.profileIconPath;
       },
       error: _ => {

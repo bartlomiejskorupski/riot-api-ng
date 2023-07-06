@@ -1,3 +1,5 @@
+import { ChampionMasteryResponse } from "./champion-mastery.model";
+
 export interface SummonerResponse {
   accountId?: string;
   profileIconId?: number;
@@ -7,4 +9,5 @@ export interface SummonerResponse {
   puuid?: string;
   summonerLevel?: number;
   profileIconPath?: string;
+  championMasteries?: ChampionMasteryResponse[];
 }

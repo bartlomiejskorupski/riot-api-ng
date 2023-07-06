@@ -9,6 +9,11 @@
     <div class="summoner-info-container">
       <span class="summoner-info-name">{{summoner?.name}}</span>
     </div>
+    <div class="summoner-masteries-container" *ngIf="!!summoner.championMasteries">
+      <img class="champion-icon"
+        *ngFor="let mastery of summoner.championMasteries"
+        [src]="mastery.championIconPath" alt="Champion icon">
+    </div>
   </div>
   <div class="grid-item ranked">
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero delectus id optio totam aut sit quod pariatur omnis dolores iure quam, necessitatibus ducimus harum assumenda, blanditiis non vitae neque vel.
