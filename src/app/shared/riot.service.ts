@@ -16,7 +16,7 @@ export class RiotService {
   ) {}
 
   getSummoner(region: string, name: string): Observable<SummonerDTO> {
-    const endpoint = `/api/summoner/${region}/${encodeURI(name)}`;
+    const endpoint = `/api/${region}/summoner/${encodeURI(name)}`;
     return this.getEndpoint(endpoint);
   }
 
