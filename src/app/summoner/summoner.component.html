@@ -9,7 +9,7 @@
     <div class="summoner-info-container">
       <span class="summoner-info-name">{{summoner?.name}}</span>
     </div>
-    <div class="summoner-masteries-container" *ngIf="!!summoner.championMasteries">
+    <div class="summoner-masteries-container" *ngIf="!!summoner">
       <img class="champion-icon"
         *ngFor="let mastery of summoner.championMasteries"
         [src]="mastery.championIconPath" alt="Champion icon">
