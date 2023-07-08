@@ -31,6 +31,12 @@ export class RiotService {
     return this.getEndpoint(endpoint);
   }
 
+  getNamesStartingWith(region: string, startsWith: string): Observable<string[]> {
+    const endpoint = `/api/${region}/summoner-name/starts-with`
+    const params = new HttpParams().set('startsWith', startsWith);
+    return this.getEndpoint(endpoint, params);
+  }
+
   private getEndpoint(endpoint: string, params?: HttpParams): Observable<any> {
     this.logger.debug(endpoint);
     const url = new URL(endpoint, environment.apiUrl);

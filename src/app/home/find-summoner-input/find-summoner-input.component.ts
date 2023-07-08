@@ -1,13 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { Subscription, debounceTime, fromEvent, map, mergeMap } from 'rxjs';
+import { RiotService } from 'src/app/shared/riot.service';
 
 @Component({
   selector: 'app-find-summoner-input',
   templateUrl: './find-summoner-input.component.html',
   styleUrls: ['./find-summoner-input.component.css']
 })
-export class FindSummonerInputComponent implements OnInit, OnDestroy {
+export class FindSummonerInputComponent implements OnInit, AfterViewInit {
 
   regions = {
     "EUNE": 'eun1',
@@ -30,17 +32,38 @@ export class FindSummonerInputComponent implements OnInit, OnDestroy {
 
   regionNames = Object.keys(this.regions);
 
+  @ViewChild("summonerInput") nameInput: ElementRef<HTMLInputElement>;
+  @ViewChild("regionSelect") regionSelect: ElementRef<HTMLSelectElement>;
+  private sub: Subscription;
+
   constructor(
     private logger: NGXLogger,
-    private router: Router
+    private router: Router,
+    private riot: RiotService
   ) { }
 
   ngOnInit(): void {
     
   }
 
+  ngAfterViewInit(): void {
+    this.sub = fromEvent(this.nameInput.nativeElement, 'keyup')
+      .pipe(
+        map(_ => this.nameInput.nativeElement.value),
+        debounceTime(500),
+        mergeMap(value => this.riot.getNamesStartingWith(
+          this.regionSelect.nativeElement.value,
+          this.nameInput.nativeElement.value
+        ))
+      ).subscribe({
+        next: names => {
+          this.logger.debug(names);
+        }
+      });
+  }
+
   ngOnDestroy(): void {
-    
+    this.sub?.unsubscribe();
   }
 
   findSummoner(regionSelect: HTMLSelectElement, nameInput: HTMLInputElement) {
