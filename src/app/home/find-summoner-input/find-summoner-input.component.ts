@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { Subscription, debounceTime, fromEvent, map, mergeMap } from 'rxjs';
+import { Subscription, debounceTime, fromEvent, map, mergeMap, take } from 'rxjs';
 import { RiotService } from 'src/app/shared/riot.service';
 
 @Component({
@@ -36,6 +36,9 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   @ViewChild("regionSelect") regionSelect: ElementRef<HTMLSelectElement>;
   private sub: Subscription;
 
+  nameSuggestions: String[] = [];
+  isInputFocused = false;
+
   constructor(
     private logger: NGXLogger,
     private router: Router,
@@ -43,10 +46,17 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit(): void {
+    this.riot.getNamesStartingWith(
+      this.regionSelect.nativeElement.value, '')
+      .pipe(take(1))
+      .subscribe({
+      next: names => this.nameSuggestions = names
+    })
+
     this.sub = fromEvent(this.nameInput.nativeElement, 'keyup')
       .pipe(
         map(_ => this.nameInput.nativeElement.value),
@@ -57,7 +67,7 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
         ))
       ).subscribe({
         next: names => {
-          this.logger.debug(names);
+          this.nameSuggestions = names;
         }
       });
   }
@@ -66,13 +76,36 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
     this.sub?.unsubscribe();
   }
 
-  findSummoner(regionSelect: HTMLSelectElement, nameInput: HTMLInputElement) {
-    this.logger.debug(regionSelect.value, nameInput.value);
-    if(!nameInput.value) {
+  dropdownItemClicked(name: string) {
+    this.nameInput.nativeElement.value = name;
+    this.findSummoner();
+  }
+
+  onInputFocus() {
+    this.isInputFocused = true;
+  }
+
+  onInputBlur() {
+    setTimeout(
+      () => this.isInputFocused = false,
+      100
+    );
+  }
+
+  findSummoner() {
+    this.logger.debug(
+      this.regionSelect.nativeElement.value,
+      this.nameInput.nativeElement.value
+    );
+    if(!this.nameInput.nativeElement.value) {
       return;
     }
-    this.router.navigate(['summoner', regionSelect.value, nameInput.value]);
-    nameInput.value = "";
+    this.router.navigate([
+      'summoner',
+      this.regionSelect.nativeElement.value,
+      this.nameInput.nativeElement.value
+    ]);
+    this.nameInput.nativeElement.value = "";
   }
 
 }

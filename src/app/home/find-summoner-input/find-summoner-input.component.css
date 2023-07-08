@@ -18,13 +18,18 @@
   border-radius: 9999px;
 }
 
+.name-input-container {
+  position: relative;
+  flex-grow: 1;
+}
+
 .name-input {
   background-color: unset;
   padding: 1em 1em;
   border-style: none;
   color: inherit;
   outline: none;
-  width: 100%;
+  width: 100%
 }
 
 .find-button {
@@ -32,4 +37,28 @@
   padding: 0 1em;
   border-radius: 9999px;
   height: 100%;
+}
+
+.dropdown-container {
+  position: absolute;
+  background-color: #252a34;
+  width: 100%;
+  cursor: pointer;
+  border-bottom-left-radius: .25em;
+  border-bottom-right-radius: .25em;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.dropdown-item {
+  padding: .5em .75em;
+  user-select: none;
+}
+
+.dropdown-container.open {
+  visibility: visible;
+}
+
+.dropdown-item:hover {
+  background-color: #313845;
 }
