@@ -40,14 +40,32 @@
 }
 
 .dropdown-container {
+  visibility: hidden;
   position: absolute;
   background-color: #252a34;
   width: 100%;
+  max-height: 200px;
   cursor: pointer;
   border-bottom-left-radius: .25em;
   border-bottom-right-radius: .25em;
-  overflow: hidden;
-  visibility: hidden;
+  overflow-y: auto;
+}
+
+.dropdown-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dropdown-container::-webkit-scrollbar-track {
+  background-color: #252a34; 
+}
+ 
+.dropdown-container::-webkit-scrollbar-thumb {
+  background: #2c3240;
+  border-radius: .25em; 
+}
+
+.dropdown-container::-webkit-scrollbar-thumb:hover {
+  background: #313848; 
 }
 
 .dropdown-item {
