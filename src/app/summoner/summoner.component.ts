@@ -15,8 +15,9 @@ export class SummonerComponent implements OnInit, OnDestroy {
 
   summoner: SummonerResponse;
   iconPath: string;
-  region: string;
-  revisionDate: Date
+
+  loading = true;
+  error = false;
 
   private paramsSub: Subscription;
 
@@ -35,15 +36,18 @@ export class SummonerComponent implements OnInit, OnDestroy {
   }
 
   queryParamsChange = (params: Params) => {
-    this.region = params['region'];
-    this.riot.getSummoner(this.region, params['name']).subscribe({
+    this.loading = true
+    this.riot.getSummoner(params['region'], params['name']).subscribe({
       next: summoner => {
         this.summoner = summoner;
-        this.logger.debug(summoner);
+        // this.logger.debug(summoner);
         this.iconPath = environment.apiUrl + summoner.profileIconPath;
+        this.loading = false;
       },
       error: _ => {
         this.summoner = null;
+        this.loading = false;
+        this.error = true;
       }
     });
   }

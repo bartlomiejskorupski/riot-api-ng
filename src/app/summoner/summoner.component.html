@@ -1,4 +1,10 @@
-<div class="grid-box">
+<div class="spinner-container" *ngIf="loading">
+  <app-spinner></app-spinner>
+</div>
+<div class="error-container" *ngIf="error && !loading">
+
+</div>
+<div class="grid-box" *ngIf="!loading">
   <div class="grid-item profile-header">
     <div class="summoner-icon-container">
       <span class="summoner-level">{{summoner?.summonerLevel}}</span>

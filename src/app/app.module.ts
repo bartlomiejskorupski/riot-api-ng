@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AppLoggerModule } from './app-logger.module';
 import { SummonerComponent } from './summoner/summoner.component';
 import { FindSummonerInputComponent } from './home/find-summoner-input/find-summoner-input.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FindSummonerInputComponent } from './home/find-summoner-input/find-summ
     HomeComponent,
     PageNotFoundComponent,
     SummonerComponent,
-    FindSummonerInputComponent
+    FindSummonerInputComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

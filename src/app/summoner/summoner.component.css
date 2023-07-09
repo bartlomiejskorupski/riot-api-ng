@@ -1,3 +1,10 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
 .grid-box {
   display: grid;
   grid-template-columns: 1fr 2fr;
