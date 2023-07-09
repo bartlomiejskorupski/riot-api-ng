@@ -13,6 +13,9 @@ import { environment } from 'src/environments/environment';
 })
 export class SummonerComponent implements OnInit, OnDestroy {
 
+  searchedName: string;
+  searchedRegion: string;
+
   summoner: SummonerResponse;
   iconPath: string;
 
@@ -36,6 +39,9 @@ export class SummonerComponent implements OnInit, OnDestroy {
   }
 
   queryParamsChange = (params: Params) => {
+    this.searchedName = params['name'];
+    this.searchedRegion = params['region'];
+    this.error = false;
     this.loading = true
     this.riot.getSummoner(params['region'], params['name']).subscribe({
       next: summoner => {

@@ -2,9 +2,9 @@
   <app-spinner></app-spinner>
 </div>
 <div class="error-container" *ngIf="error && !loading">
-
+  <p>Summoner "{{searchedName}}" was not found!</p>
 </div>
-<div class="grid-box" *ngIf="!loading">
+<div class="grid-box" *ngIf="!loading && !error">
   <div class="grid-item profile-header">
     <div class="summoner-icon-container">
       <span class="summoner-level">{{summoner?.summonerLevel}}</span>

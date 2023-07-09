@@ -106,6 +106,7 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
       this.nameInput.nativeElement.value
     ]);
     this.nameInput.nativeElement.value = "";
+    this.nameInput.nativeElement.blur();
   }
 
 }
