@@ -2,6 +2,7 @@ import { ChampionMasteryResponse } from "./champion-mastery.model";
 
 export interface SummonerResponse {
   accountId?: string;
+  region?: string;
   profileIconId?: number;
   revisionDate?: number;
   name?: string;

@@ -93,10 +93,10 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   }
 
   findSummoner() {
-    this.logger.debug(
-      this.regionSelect.nativeElement.value,
-      this.nameInput.nativeElement.value
-    );
+    // this.logger.debug(
+    //   this.regionSelect.nativeElement.value,
+    //   this.nameInput.nativeElement.value
+    // );
     if(!this.nameInput.nativeElement.value) {
       return;
     }
