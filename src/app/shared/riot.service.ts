@@ -20,15 +20,10 @@ export class RiotService {
     return this.getEndpoint(endpoint);
   }
 
-  getMatches(puuid: string): Observable<string[]>{
-    const endpoint = `/api/matches/by-puuid/${encodeURI(puuid)}`;
-    const params = new HttpParams().set('start', 0).set('count', 5);
-    return this.getEndpoint(endpoint, params);
-  }
-
-  getMatch(matchId: string): Observable<MatchDTO>{
-    const endpoint = `/api/match/${encodeURI(matchId)}`;
-    return this.getEndpoint(endpoint);
+  updateSummoner(region: string, puuid: string): Observable<SummonerResponse> {
+    const endpoint = `/api/${region}/summoner/${encodeURI(puuid)}`;
+    const url = new URL(endpoint, environment.apiUrl);
+    return this.http.put(url.href, {});
   }
 
   getNamesStartingWith(region: string, startsWith: string): Observable<string[]> {

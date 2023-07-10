@@ -32,12 +32,6 @@
   align-items: flex-end;
 }
 
-.summoner-icon-container,
-.summoner-info-container
-{
-  display: inline-block;
-}
-
 .summoner-icon-container {
   position: relative;
   height: 90px;
@@ -74,7 +68,33 @@ img.summoner-icon {
 }
 
 .summoner-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
   width: auto;
   margin-left: .5em;
   font-size: 40px;
 }
+
+.summoner-info-name {
+  margin: 0;
+}
+
+.btn {
+  background-color: #1c2d54;
+  border: 2px solid rgb(13, 32, 59);
+  border-radius: .4em;
+  color: rgb(218, 218, 218);
+  padding: .4em .8em;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #283d73;
+}
+
+.btn:active {
+  background-color: #1c2d54;
+}
+

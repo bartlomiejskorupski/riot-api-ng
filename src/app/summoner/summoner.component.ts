@@ -58,4 +58,13 @@ export class SummonerComponent implements OnInit, OnDestroy {
     });
   }
 
+  updateSummoner() {
+    this.riot.updateSummoner(this.summoner.region, this.summoner.puuid)
+      .subscribe({
+        next: summoner => {
+          this.logger.debug(summoner);
+        }
+      })
+  }
+
 }

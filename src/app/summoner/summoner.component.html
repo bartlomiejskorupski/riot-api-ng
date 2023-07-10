@@ -13,7 +13,11 @@
       </div>
     </div>
     <div class="summoner-info-container">
-      <span class="summoner-info-name">{{summoner?.name}}</span>
+      <p class="summoner-info-name">{{summoner?.name}}</p>
+      <button class="btn btn-blue" type="button"
+        (click)="updateSummoner()">
+        Update
+      </button>
     </div>
     <div class="summoner-masteries-container" *ngIf="!!summoner">
       <img class="champion-icon"
