@@ -29,6 +29,8 @@ export class SummonerComponent implements OnInit, OnDestroy {
   flexLeagueEntry: LeagueEntryResponse;
   soloLeagueEntry: LeagueEntryResponse;
 
+  flexEmblem: string = 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-diamond.png';
+  soloEmblem: string = 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-platinum.png';
 
   private paramsSub: Subscription;
 

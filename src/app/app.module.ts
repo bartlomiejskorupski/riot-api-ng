@@ -9,6 +9,7 @@ import { AppLoggerModule } from './app-logger.module';
 import { SummonerComponent } from './summoner/summoner.component';
 import { FindSummonerInputComponent } from './home/find-summoner-input/find-summoner-input.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
