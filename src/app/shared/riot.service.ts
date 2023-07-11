@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { SummonerResponse } from "./model/summoner.model";
 import { NGXLogger } from "ngx-logger";
 import { environment } from "src/environments/environment";
+import { LeagueEntryResponse } from "./model/league-entry.model";
 
 
 @Injectable({ providedIn: 'root' })
@@ -31,6 +32,11 @@ export class RiotService {
       .set('startsWith', startsWith)
       .set('top', 10);
     return this.getEndpoint(endpoint, params);
+  }
+
+  getLeagueEntries(region: string, puuid: string): Observable<LeagueEntryResponse[]>{
+    const endpoint = `/api/${region}/league-entry/${puuid}`;
+    return this.getEndpoint(endpoint);
   }
 
   private getEndpoint(endpoint: string, params?: HttpParams): Observable<any> {
