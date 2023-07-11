@@ -38,6 +38,9 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
 
   nameSuggestions: String[] = [];
   isInputFocused = false;
+  isDropdownFocused = false;
+
+  dropdownBlurTimeout = null;
 
   constructor(
     private logger: NGXLogger,
@@ -83,6 +86,7 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
 
   dropdownItemClicked(name: string) {
     this.nameInput.nativeElement.value = name;
+    this.isDropdownFocused = false;
     this.findSummoner();
   }
 
@@ -93,15 +97,23 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   onInputBlur() {
     setTimeout(
       () => this.isInputFocused = false,
-      100
+      50
+    );
+  }
+
+  onDropdownFocus() {
+    this.dropdownBlurTimeout && clearTimeout(this.dropdownBlurTimeout);
+    this.isDropdownFocused = true;
+  }
+
+  onDropdownBlur() {
+    this.dropdownBlurTimeout = setTimeout(
+      () => this.isDropdownFocused = false,
+      50
     );
   }
 
   findSummoner() {
-    // this.logger.debug(
-    //   this.regionSelect.nativeElement.value,
-    //   this.nameInput.nativeElement.value
-    // );
     if(!this.nameInput.nativeElement.value) {
       return;
     }

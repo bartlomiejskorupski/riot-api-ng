@@ -12,10 +12,14 @@
       (keydown.enter)="findSummoner()"
       (focus)="onInputFocus()"
       (blur)="onInputBlur()">
-    <div class="dropdown-container" [class.open]="isInputFocused">
+    <div class="dropdown-container"
+      [class.open]="isInputFocused || isDropdownFocused">   
       <div class="dropdown-item"
-        *ngFor="let suggestion of nameSuggestions"
-        (click)="dropdownItemClicked(suggestion);">
+        *ngFor="let suggestion of nameSuggestions;" tabindex="0"
+        (click)="dropdownItemClicked(suggestion)"
+        (focus)="onDropdownFocus()"
+        (blur)="onDropdownBlur()"
+        (keydown.enter)="dropdownItemClicked(suggestion)">
         {{ suggestion }}
       </div>
     </div>
