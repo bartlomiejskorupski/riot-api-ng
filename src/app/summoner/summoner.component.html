@@ -30,7 +30,7 @@
       <p class="queue-type">Ranked Solo/Duo</p>
       <div class="rank-info-container">
         <div class="ranked-emblem-container">
-          <img class="ranked-emblem" [src]="soloEmblem">
+          <img class="ranked-emblem" [src]="soloLeagueEntry?.emblemUrl">
         </div>
         <div class="tier-lp-container">
           <div class="tier-rank">
@@ -43,7 +43,7 @@
         <div class="wr-container">
           <div class="wins-losses">{{ soloLeagueEntry?.wins }}W / {{ soloLeagueEntry?.losses }}L</div>
           <div class="win-ratio">
-            WR {{ (100 * soloLeagueEntry?.wins / (soloLeagueEntry?.wins + soloLeagueEntry?.losses)) | number:'1.0-2' }}%
+            WR {{ soloLeagueEntry?.winRatio }}
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
       <p class="queue-type">Ranked Flex</p>
       <div class="rank-info-container">
         <div class="ranked-emblem-container">
-          <img class="ranked-emblem" [src]="flexEmblem">
+          <img class="ranked-emblem" [src]="flexLeagueEntry?.emblemUrl">
         </div>
         <div class="tier-lp-container">
           <div class="tier-rank">
@@ -65,7 +65,7 @@
         <div class="wr-container">
           <div class="wins-losses">{{ flexLeagueEntry?.wins }}W / {{ flexLeagueEntry?.losses }}L</div>
           <div class="win-ratio">
-            WR {{ (100 * flexLeagueEntry?.wins / (flexLeagueEntry?.wins + flexLeagueEntry?.losses)) | number:'1.0-2' }}%
+            WR {{ flexLeagueEntry?.winRatio }}
           </div>
         </div>
       </div>

@@ -20,4 +20,6 @@ export interface LeagueEntryResponse {
   seriesLosses?: number;
   seriesProgress?: string;
   seriesTarget?: number;
+  emblemUrl?: string;
+  winRatio?: string;
 }
