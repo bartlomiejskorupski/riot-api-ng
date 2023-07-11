@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, catchError, map, of, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { SummonerResponse } from "./model/summoner.model";
-import { MatchDTO } from "./model/match.model";
 import { NGXLogger } from "ngx-logger";
 import { environment } from "src/environments/environment";
 

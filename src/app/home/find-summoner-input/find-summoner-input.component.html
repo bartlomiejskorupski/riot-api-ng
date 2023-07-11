@@ -1,6 +1,7 @@
 <div class="input-container">
   <div class="region-select-container">
-    <select class="region-select" #regionSelect>
+    <select class="region-select" #regionSelect
+      (change)="onRegionChange()">
       <option *ngFor="let regionName of regionNames"
         [value]="regions[regionName]">{{regionName}}</option>
     </select>

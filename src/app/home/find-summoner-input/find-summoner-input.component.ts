@@ -50,30 +50,35 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.riot.getNamesStartingWith(
-      this.regionSelect.nativeElement.value, '')
-      .pipe(take(1))
-      .subscribe({
-      next: names => this.nameSuggestions = names
-    })
+    this.updateNameSuggestions();
 
     this.sub = fromEvent(this.nameInput.nativeElement, 'keyup')
       .pipe(
-        map(_ => this.nameInput.nativeElement.value),
-        debounceTime(500),
-        mergeMap(value => this.riot.getNamesStartingWith(
-          this.regionSelect.nativeElement.value,
-          this.nameInput.nativeElement.value
-        ))
+        debounceTime(500)
       ).subscribe({
-        next: names => {
-          this.nameSuggestions = names;
-        }
+        next: _ => this.updateNameSuggestions()
       });
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  updateNameSuggestions() {
+    const region = this.regionSelect.nativeElement.value;
+    const name = this.nameInput.nativeElement.value;
+    this.riot.getNamesStartingWith(region, name)
+      .pipe(take(1))
+      .subscribe({
+        next: names => {
+          this.nameSuggestions = names;
+          this.logger.debug('Updating suggestions');
+        }
+      })
+  }
+
+  onRegionChange() {
+    this.updateNameSuggestions();
   }
 
   dropdownItemClicked(name: string) {
