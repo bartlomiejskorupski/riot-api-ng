@@ -6,19 +6,19 @@
         [value]="regions[regionName]">{{regionName}}</option>
     </select>
   </div>
-  <div class="name-input-container">
+  <div class="name-input-container"
+    (keydown.arrowup)="inputOnArrowPress('up')"
+    (keydown.arrowdown)="inputOnArrowPress('down')"
+    #inputContainer>
     <input class="name-input" #summonerInput type="text"
       placeholder="Find summoner..."
-      (keydown.enter)="findSummoner()"
-      (focus)="onInputFocus()"
-      (blur)="onInputBlur()">
+      (keydown.enter)="findSummoner()">
     <div class="dropdown-container"
-      [class.open]="isInputFocused || isDropdownFocused">   
+      [class.open]="dropdownOpen"
+      #dropdownContainer>   
       <div class="dropdown-item"
         *ngFor="let suggestion of nameSuggestions;" tabindex="0"
         (click)="dropdownItemClicked(suggestion)"
-        (focus)="onDropdownFocus()"
-        (blur)="onDropdownBlur()"
         (keydown.enter)="dropdownItemClicked(suggestion)">
         {{ suggestion }}
       </div>

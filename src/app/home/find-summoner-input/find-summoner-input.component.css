@@ -81,3 +81,8 @@
 .dropdown-item:hover {
   background-color: #313845;
 }
+
+.dropdown-item:focus {
+  outline: none;
+  background-color: #363d4b;
+}

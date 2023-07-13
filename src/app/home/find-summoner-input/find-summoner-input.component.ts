@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription, debounceTime, fromEvent, map, mergeMap, take } from 'rxjs';
@@ -37,10 +37,11 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
   private sub: Subscription;
 
   nameSuggestions: String[] = [];
-  isInputFocused = false;
-  isDropdownFocused = false;
 
-  dropdownBlurTimeout = null;
+  @ViewChild('inputContainer') inputContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('dropdownContainer') dropdownContainer: ElementRef<HTMLDivElement>;
+
+  dropdownOpen = false;
 
   constructor(
     private logger: NGXLogger,
@@ -61,10 +62,28 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
       ).subscribe({
         next: _ => this.updateNameSuggestions()
       });
+
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    // Prevent site from scrolling when dropdown is open
+    if (this.dropdownOpen && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+      event.preventDefault();
+    }
+  }
+
+  @HostListener('document:click', ['$event']) 
+  onClick(event: MouseEvent) {
+    if(!this.inputContainer.nativeElement.contains(event.target as Node)) { 
+      this.dropdownOpen = false;
+      return;
+    }
+    this.dropdownOpen = true;
   }
 
   updateNameSuggestions() {
@@ -86,34 +105,29 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
 
   dropdownItemClicked(name: string) {
     this.nameInput.nativeElement.value = name;
-    this.isDropdownFocused = false;
+    setTimeout(() => this.dropdownOpen = false, 50);
     this.findSummoner();
   }
 
-  onInputFocus() {
-    this.isInputFocused = true;
-  }
-
-  onInputBlur() {
-    setTimeout(
-      () => this.isInputFocused = false,
-      50
-    );
-  }
-
-  onDropdownFocus() {
-    this.dropdownBlurTimeout && clearTimeout(this.dropdownBlurTimeout);
-    this.isDropdownFocused = true;
-  }
-
-  onDropdownBlur() {
-    this.dropdownBlurTimeout = setTimeout(
-      () => this.isDropdownFocused = false,
-      50
-    );
+  inputOnArrowPress(arrow: string) {
+    const focused = document.activeElement;
+    if(focused === this.nameInput.nativeElement) {
+      (this.dropdownContainer.nativeElement.firstChild as HTMLElement).focus();
+      return;
+    }
+    if(!this.dropdownContainer.nativeElement.contains(focused)) {
+      return;
+    }
+    if(arrow === 'down' && (focused.nextSibling as HTMLElement).classList?.contains('dropdown-item')) {
+      (focused.nextSibling as HTMLElement).focus();
+    }
+    if(arrow === 'up' && focused.previousSibling !== null) {
+      (focused.previousSibling as HTMLElement).focus();
+    }
   }
 
   findSummoner() {
+    this.dropdownOpen = false;
     if(!this.nameInput.nativeElement.value) {
       return;
     }
