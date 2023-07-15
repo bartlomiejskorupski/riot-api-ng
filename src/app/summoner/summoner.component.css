@@ -128,3 +128,27 @@ img.summoner-icon {
   left: -590px;
   scale: 30%;
 }
+
+@media screen and (max-width: 900px) {
+
+  .ranked {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .right-panel {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+
+  .ranked {
+    flex-direction: column;
+  }
+
+}
