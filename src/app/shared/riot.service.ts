@@ -5,6 +5,7 @@ import { SummonerResponse } from "./model/summoner.model";
 import { NGXLogger } from "ngx-logger";
 import { environment } from "src/environments/environment";
 import { LeagueEntryResponse } from "./model/league-entry.model";
+import { ChampionMasteryResponse } from "./model/champion-mastery.model";
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,8 +35,13 @@ export class RiotService {
     return this.getEndpoint(endpoint, params);
   }
 
-  getLeagueEntries(region: string, puuid: string): Observable<LeagueEntryResponse[]>{
+  getLeagueEntries(region: string, puuid: string): Observable<LeagueEntryResponse[]> {
     const endpoint = `/api/${region}/league-entry/${puuid}`;
+    return this.getEndpoint(endpoint);
+  }
+
+  getMasteries(region: string, puuid: string): Observable<ChampionMasteryResponse[]> {
+    const endpoint = `/api/${region}/champion-mastery/${puuid}`;
     return this.getEndpoint(endpoint);
   }
 

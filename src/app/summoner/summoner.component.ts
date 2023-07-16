@@ -6,6 +6,7 @@ import { RiotService } from '../shared/riot.service';
 import { SummonerResponse } from '../shared/model/summoner.model';
 import { environment } from 'src/environments/environment';
 import { LeagueEntryResponse, LeagueEntryType } from '../shared/model/league-entry.model';
+import { ChampionMasteryResponse } from '../shared/model/champion-mastery.model';
 
 @Component({
   selector: 'app-summoner',
@@ -79,6 +80,7 @@ export class SummonerComponent implements OnInit, OnDestroy {
     this.iconPath = environment.apiUrl + summoner.profileIconPath;
     this.loading = false;
     this.loadLeagueEntries(this.summoner);
+    this.loadMasteries(this.summoner);
   };
 
   summonerNotFound = (error: any) => {
@@ -97,6 +99,16 @@ export class SummonerComponent implements OnInit, OnDestroy {
       .subscribe({
         next: this.leagueEntriesLoaded,
         error: this.leagueEntriesError
+      });
+  }
+
+  loadMasteries(summoner: SummonerResponse) {
+    this.logger.debug('Loading masteries');
+    this.riot.getMasteries(summoner.region, summoner.puuid)
+      .pipe(take(1))
+      .subscribe({
+        next: this.masteriesLoaded,
+        error: this.masteriesError
       });
   }
 
@@ -119,6 +131,15 @@ export class SummonerComponent implements OnInit, OnDestroy {
     this.loadingRank = false;
     this.rankError = true;
   }
+
+  masteriesLoaded = (masteries: ChampionMasteryResponse[]) => {
+    this.logger.debug(`Loaded ${masteries.length} masteries`);
+    this.logger.debug(masteries);
+  };
+
+  masteriesError = (error) => {
+    this.logger.debug('Error loading masteries:', error);
+  };
 
   updateSummoner() {
     this.riot.updateSummoner(this.summoner.region, this.summoner.puuid)
