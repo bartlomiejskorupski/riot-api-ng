@@ -101,6 +101,7 @@ img.summoner-icon {
 .ranked {
   display: flex;
   flex-direction: column;
+  align-self: start;
 }
 
 .queue-type {

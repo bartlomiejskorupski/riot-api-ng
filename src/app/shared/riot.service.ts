@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { SummonerResponse } from "./model/summoner.model";
 import { NGXLogger } from "ngx-logger";
 import { environment } from "src/environments/environment";
@@ -10,6 +10,9 @@ import { ChampionMasteryResponse } from "./model/champion-mastery.model";
 
 @Injectable({ providedIn: 'root' })
 export class RiotService {
+
+  summonerSubject = new BehaviorSubject<SummonerResponse>(null);
+  summoner$ = this.summonerSubject.asObservable();
 
   constructor(
     private http: HttpClient,

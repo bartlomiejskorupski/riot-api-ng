@@ -9,4 +9,11 @@ export interface ChampionMasteryResponse {
   summonerId?: string;
   tokensEarned?: number;
   championIconPath?: string;
+  championData: {
+    id: number;
+    name: string;
+    alias: string;
+    squarePortraitPath: string;
+    roles: string[];
+  }
 }

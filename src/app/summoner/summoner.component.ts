@@ -77,14 +77,15 @@ export class SummonerComponent implements OnInit, OnDestroy {
   summonerLoaded = (summoner: SummonerResponse) => {
     this.logger.debug('Summoner loaded:', summoner.name);
     this.summoner = summoner;
+    this.riot.summonerSubject.next(summoner);
     this.iconPath = environment.apiUrl + summoner.profileIconPath;
     this.loading = false;
     this.loadLeagueEntries(this.summoner);
-    this.loadMasteries(this.summoner);
   };
 
   summonerNotFound = (error: any) => {
     this.logger.debug('Summoner not found', error?.status);
+    this.riot.summonerSubject.next(null);
     this.summoner = null;
     this.loading = false;
     this.error = true;
@@ -99,16 +100,6 @@ export class SummonerComponent implements OnInit, OnDestroy {
       .subscribe({
         next: this.leagueEntriesLoaded,
         error: this.leagueEntriesError
-      });
-  }
-
-  loadMasteries(summoner: SummonerResponse) {
-    this.logger.debug('Loading masteries');
-    this.riot.getMasteries(summoner.region, summoner.puuid)
-      .pipe(take(1))
-      .subscribe({
-        next: this.masteriesLoaded,
-        error: this.masteriesError
       });
   }
 
@@ -131,15 +122,6 @@ export class SummonerComponent implements OnInit, OnDestroy {
     this.loadingRank = false;
     this.rankError = true;
   }
-
-  masteriesLoaded = (masteries: ChampionMasteryResponse[]) => {
-    this.logger.debug(`Loaded ${masteries.length} masteries`);
-    this.logger.debug(masteries);
-  };
-
-  masteriesError = (error) => {
-    this.logger.debug('Error loading masteries:', error);
-  };
 
   updateSummoner() {
     this.riot.updateSummoner(this.summoner.region, this.summoner.puuid)
