@@ -19,15 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    
   }
-
-  enterPressed(name: string) {
-    if(!name) {
-      return;
-    }
-    this.logger.debug('Entered summoner name:', name);
-    this.router.navigate(['summoner', 'eun1', name]);
-  }
-
 
 }

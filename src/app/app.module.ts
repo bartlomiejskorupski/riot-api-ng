@@ -10,6 +10,8 @@ import { SummonerComponent } from './summoner/summoner.component';
 import { FindSummonerInputComponent } from './home/find-summoner-input/find-summoner-input.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { CommonModule } from '@angular/common';
+import { MatchHistoryComponent } from './summoner/match-history/match-history.component';
+import { ChampionMasteryComponent } from './summoner/champion-mastery/champion-mastery.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { CommonModule } from '@angular/common';
     PageNotFoundComponent,
     SummonerComponent,
     FindSummonerInputComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MatchHistoryComponent,
+    ChampionMasteryComponent
   ],
   imports: [
     BrowserModule,

@@ -134,7 +134,8 @@ export class FindSummonerInputComponent implements OnInit, AfterViewInit {
     this.router.navigate([
       'summoner',
       this.regionSelect.nativeElement.value,
-      this.nameInput.nativeElement.value
+      this.nameInput.nativeElement.value,
+      'match-history'
     ]);
     this.nameInput.nativeElement.value = "";
     this.nameInput.nativeElement.blur();
