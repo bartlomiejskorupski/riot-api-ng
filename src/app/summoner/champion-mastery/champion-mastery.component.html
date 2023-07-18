@@ -1,1 +1,13 @@
-<p *ngFor="let mastery of masteries">{{ mastery.championData.name }}</p>
+<div class="champion-container" *ngFor="let mastery of masteries">
+  <div class="flex-item">
+    <p class="name">{{ mastery?.championData?.name }}</p>
+    <img [src]="'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/' + mastery.championId + '.png'"
+      alt="Icon" class="icon">
+  </div>
+  <div class="flex-item">
+    {{ mastery.championLevel }}
+  </div>
+  <div class="flex-item">
+    {{ mastery.championPoints }}
+  </div>
+</div>
