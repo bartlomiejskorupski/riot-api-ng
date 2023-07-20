@@ -4,6 +4,7 @@ import { Subscription, take } from 'rxjs';
 import { ChampionMasteryResponse } from 'src/app/shared/model/champion-mastery.model';
 import { SummonerResponse } from 'src/app/shared/model/summoner.model';
 import { RiotService } from 'src/app/shared/riot.service';
+import { SummonerService } from '../summoner.service';
 
 @Component({
   selector: 'app-champion-mastery',
@@ -18,11 +19,12 @@ export class ChampionMasteryComponent implements OnInit {
 
   constructor(
     private logger: NGXLogger,
-    private riot: RiotService
+    private riot: RiotService,
+    private summonerService: SummonerService
   ) { }
 
   ngOnInit(): void {
-    this.summonerSub = this.riot.summoner$.subscribe({
+    this.summonerSub = this.summonerService.summoner$.subscribe({
       next: this.nextSummoner
     });
   }

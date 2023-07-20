@@ -10,10 +10,7 @@ import { ChampionMasteryResponse } from "./model/champion-mastery.model";
 
 @Injectable({ providedIn: 'root' })
 export class RiotService {
-
-  summonerSubject = new BehaviorSubject<SummonerResponse>(null);
-  summoner$ = this.summonerSubject.asObservable();
-
+  
   constructor(
     private http: HttpClient,
     private logger: NGXLogger

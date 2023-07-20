@@ -7,6 +7,7 @@ import { SummonerResponse } from '../shared/model/summoner.model';
 import { environment } from 'src/environments/environment';
 import { LeagueEntryResponse, LeagueEntryType } from '../shared/model/league-entry.model';
 import { ChampionMasteryResponse } from '../shared/model/champion-mastery.model';
+import { SummonerService } from './summoner.service';
 
 @Component({
   selector: 'app-summoner',
@@ -38,7 +39,8 @@ export class SummonerComponent implements OnInit, OnDestroy {
   constructor(
     private logger: NGXLogger,
     private route: ActivatedRoute,
-    private riot: RiotService
+    private riot: RiotService,
+    private summonerService: SummonerService
   ) { }
 
   ngOnInit(): void {
@@ -77,7 +79,7 @@ export class SummonerComponent implements OnInit, OnDestroy {
   summonerLoaded = (summoner: SummonerResponse) => {
     this.logger.debug('Summoner loaded:', summoner.name);
     this.summoner = summoner;
-    this.riot.summonerSubject.next(summoner);
+    this.summonerService.summonerSubject.next(summoner);
     this.iconPath = environment.apiUrl + summoner.profileIconPath;
     this.loading = false;
     this.loadLeagueEntries(this.summoner);
@@ -85,7 +87,7 @@ export class SummonerComponent implements OnInit, OnDestroy {
 
   summonerNotFound = (error: any) => {
     this.logger.debug('Summoner not found', error?.status);
-    this.riot.summonerSubject.next(null);
+    this.summonerService.summonerSubject.next(null);
     this.summoner = null;
     this.loading = false;
     this.error = true;
